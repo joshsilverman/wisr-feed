@@ -3,6 +3,7 @@ source 'http://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
 gem 'mongoid', git: 'git://github.com/mongoid/mongoid.git'
+gem 'bson_ext'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -28,7 +29,7 @@ end
 group :test do
   gem 'guard'
   gem 'guard-minitest'
-  
+
   gem 'factory_girl'
   gem "minitest", "~> 4.7"
   gem "turn", "~> 0.9.6"

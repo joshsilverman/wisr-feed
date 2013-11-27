@@ -40,6 +40,7 @@ GEM
     atomic (1.1.14)
     bcrypt-ruby (3.0.1)
     bson (2.0.0.rc3)
+    bson_ext (1.5.1)
     builder (3.1.4)
     celluloid (0.15.2)
       timers (~> 1.1.0)
@@ -180,6 +181,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bson_ext
   coffee-rails (~> 4.0.0)
   database_cleaner
   devise
