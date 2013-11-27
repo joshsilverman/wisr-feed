@@ -1,7 +1,7 @@
 require 'test_helper'
 
-describe ApplicationController, "#authenticate" do
-  # it "should invoke warden authenticate" do
+describe ApplicationController, "#authenticate_client" do
+  # it "returns " do
   #   User.any_instance.expects(:serialize_from_session)
 
   #   ApplicationController.new.authenticate

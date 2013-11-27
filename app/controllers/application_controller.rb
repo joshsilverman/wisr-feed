@@ -6,6 +6,16 @@ class ApplicationController < ActionController::Base
   before_filter :authenticate
 
   def authenticate
-    warden.authenticate
+    warden.authenticate if warden
+  end
+
+  def authenticate_client!
+    if !current_user
+      render status: 403, nothing: true
+    elsif !current_user.is_client?
+      render status: 403, nothing: true
+    else
+      authenticate_user!
+    end
   end
 end

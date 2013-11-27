@@ -19,6 +19,8 @@ class MiniTest::Spec
   include FactoryGirl::Syntax::Methods
   FactoryGirl.find_definitions
 
+  include Devise::TestHelpers
+
   before :each do
     DatabaseCleaner.start
     @routes = Rails.application.routes

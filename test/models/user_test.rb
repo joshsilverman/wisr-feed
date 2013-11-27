@@ -27,3 +27,12 @@ describe User, "#serialize_from_session" do
     serialized_user.must_equal nil
   end
 end
+
+describe User, "#create_auth_token" do
+  it "returns string" do
+    user = User.create
+    token = user.create_auth_token
+
+    token.must_be_kind_of String
+  end
+end
