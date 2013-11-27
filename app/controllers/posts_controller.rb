@@ -6,4 +6,6 @@ class PostsController < ApplicationController
     json = posts.to_json
     render json: json
   end
+
+
 end
