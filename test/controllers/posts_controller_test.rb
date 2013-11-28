@@ -24,4 +24,21 @@ describe PostsController, '#create_or_update' do
     
     response.status.must_equal 200
   end
+
+  it 'creates a new post with the given post data' do
+    client = create :client, :with_auth_token
+    token = client.authentication_token
+
+    params = {
+      auth_token: token,
+      post: {
+        id: 123,
+        text: 'I am a post'
+      }
+    }
+
+    post :create_or_update, params
+
+    Post.count.must_equal 1
+  end
 end

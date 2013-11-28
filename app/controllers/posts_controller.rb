@@ -9,6 +9,15 @@ class PostsController < ApplicationController
   end
 
   def create_or_update
+    wisr_id, attrs = nil
+
+    if params[:post]
+      attrs = params[:post].permit[:text]
+      wisr_id = params[:post][:id] 
+    end
+
+    new_post = Post.create_or_update wisr_id, attrs
+
     render nothing: true
   end
 end
