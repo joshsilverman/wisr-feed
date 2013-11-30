@@ -40,5 +40,6 @@ describe PostsController, '#create_or_update' do
     post :create_or_update, params
 
     Post.count.must_equal 1
+    Post.last.text.must_equal 'I am a post'
   end
 end
