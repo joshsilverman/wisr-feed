@@ -16,10 +16,11 @@ class PostsController < ApplicationController
     if params[:post]
       attrs = params[:post].permit(:text)
       wisr_id = params[:post][:id] 
+      new_post = Post.create_or_update wisr_id, attrs
+
+      render nothing: true
+    else
+      render nothing: true, status: 400
     end
-
-    new_post = Post.create_or_update wisr_id, attrs
-
-    render nothing: true
   end
 end
