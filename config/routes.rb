@@ -12,7 +12,7 @@ WisrFeed::Application.routes.draw do
 
     resources :users
 
-    resources :asker_feeds do
+    resources :asker_feeds, only: [:show] do
       collection do
         post :update
       end

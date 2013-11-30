@@ -45,7 +45,7 @@ describe AskerFeedsController, '#update' do
     client = create :client, :with_auth_token
     params = {
       auth_token: client.authentication_token,
-      asker: {
+      user: {
         id: 123,
         twi_name: 'BioBud'
       }
@@ -62,7 +62,7 @@ describe AskerFeedsController, '#update' do
 
     params = {
       auth_token: token,
-      asker: {
+      user: {
         id: 123,
         twi_name: 'BioBud'
       }
@@ -80,7 +80,7 @@ describe AskerFeedsController, '#update' do
 
     params = {
       auth_token: token,
-      asker: {id: 123, twi_name: 'BioBud'},
+      user: {id: 123, twi_name: 'BioBud'},
       posts: [{id: 123, text: 'I am a post'},
               {id: 124, text: 'post2'}]
     }

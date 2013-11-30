@@ -39,3 +39,29 @@ describe AskerFeed, ".create_or_update" do
     AskerFeed.first.twi_name.must_equal 'heyhey'
   end
 end
+
+describe AskerFeed, "#save_dependent_posts" do
+  it "should accept a single post" do
+    feed = AskerFeed.create
+    params = {
+      post: {id: 123, text: 'postpost'}
+    }
+
+    AskerFeed.save_dependent_posts feed, params
+
+    feed.posts.count.must_equal 1
+    feed.posts.first.text.must_equal 'postpost'
+  end
+
+  it "should accept multiple posts" do
+    feed = AskerFeed.create
+    params = {
+      posts: [{id: 123, text: 'I am a post'},
+              {id: 124, text: 'post2'}]
+    }
+
+    AskerFeed.save_dependent_posts feed, params
+
+    feed.posts.count.must_equal 2
+  end
+end
