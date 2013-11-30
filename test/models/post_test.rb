@@ -16,12 +16,19 @@ describe Post, ".create_or_update" do
   end
 
   it 'wont overwrite existing post' do
-    attrs = {text: 'hey'}
-    post = Post.create_or_update 123, attrs
-    post = Post.create_or_update 124, attrs
+    post = Post.create_or_update 123, {text: 'hey'}
+    post = Post.create_or_update 124, {text: 'hey'}
 
     Post.count.must_equal 2
     Post.first.wisr_id.must_equal 123
     Post.last.wisr_id.must_equal 124
+  end
+
+  it 'will update existing post' do
+    post = Post.create_or_update 123, {text: 'hey'}
+    post = Post.create_or_update 123, {text: 'heyhey'}
+
+    Post.count.must_equal 1
+    Post.first.text.must_equal 'heyhey'
   end
 end
