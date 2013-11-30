@@ -41,5 +41,20 @@ describe PostsController, '#create_or_update' do
 
     Post.count.must_equal 1
     Post.last.text.must_equal 'I am a post'
+    Post.last.wisr_id.must_equal 123
+  end
+
+  it 'creates a new post with wisr_id when given string id' do
+    client = create :client, :with_auth_token
+    token = client.authentication_token
+
+    params = {
+      auth_token: token,
+      post: {id: '123'}
+    }
+
+    post :create_or_update, params
+
+    Post.last.wisr_id.must_equal 123
   end
 end
