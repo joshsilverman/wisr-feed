@@ -5,7 +5,7 @@ class AskerFeedsController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:update]
 
   def show
-    feed = AskerFeed.where(id: params[:id]).first
+    feed = AskerFeed.where(wisr_id: params[:id]).first
 
     render json: feed.to_json
   end

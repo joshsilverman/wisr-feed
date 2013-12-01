@@ -8,17 +8,17 @@ describe AskerFeedsController, '#show' do
   end
 
   it "renders hash with asker if asker_feed exists" do
-    feed = AskerFeed.create twi_name: 'Goose'
-    response = get :show, id: feed.id
+    feed = AskerFeed.create twi_name: 'Goose', wisr_id: 123
+    response = get :show, id: feed.wisr_id
     
     returned_json = ActiveSupport::JSON.decode(response.body)
     returned_json['twi_name'].must_equal 'Goose'
   end
 
   it "renders hash with asker if asker_feed exists" do
-    feed = AskerFeed.create twi_name: 'Goose'
+    feed = AskerFeed.create twi_name: 'Goose', wisr_id: 123
     post = feed.posts.create text: 'yolo'
-    response = get :show, id: feed.id
+    response = get :show, id: feed.wisr_id
     
     returned_json = ActiveSupport::JSON.decode(response.body)
     returned_json['posts'].first['text'].must_equal 'yolo'
