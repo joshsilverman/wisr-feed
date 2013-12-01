@@ -13,7 +13,8 @@ class AskerFeedsController < ApplicationController
   def update
     wisr_id, attrs = nil
 
-    if params[:user]
+    if params[:user] and params[:user]['role'] == 'asker'
+      
       attrs = params[:user].permit(:twi_name)
       wisr_id = params[:user][:id] 
       feed = AskerFeed.create_or_update wisr_id, attrs

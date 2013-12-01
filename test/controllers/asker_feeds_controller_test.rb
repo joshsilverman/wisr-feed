@@ -47,7 +47,8 @@ describe AskerFeedsController, '#update' do
       auth_token: client.authentication_token,
       user: {
         id: 123,
-        twi_name: 'BioBud'
+        twi_name: 'BioBud',
+        role: 'asker'
       }
     }
 
@@ -64,7 +65,8 @@ describe AskerFeedsController, '#update' do
       auth_token: token,
       user: {
         id: 123,
-        twi_name: 'BioBud'
+        twi_name: 'BioBud',
+        role: 'asker'
       }
     }
 
@@ -80,7 +82,7 @@ describe AskerFeedsController, '#update' do
 
     params = {
       auth_token: token,
-      user: {id: 123, twi_name: 'BioBud'},
+      user: {id: 123, twi_name: 'BioBud', role: 'asker'},
       posts: [{id: 123, text: 'I am a post'},
               {id: 124, text: 'post2'}]
     }
@@ -91,5 +93,21 @@ describe AskerFeedsController, '#update' do
     posts.count.must_equal 2
     posts.last.text.must_equal 'post2'
     posts.last.wisr_id.must_equal 124
+  end
+
+  it 'returns 400 if user role is not asker' do
+    client = create :client, :with_auth_token
+    params = {
+      auth_token: client.authentication_token,
+      user: {
+        id: 123,
+        twi_name: 'BioBud',
+        role: 'user'
+      }
+    }
+
+    post :update, params
+    
+    response.status.must_equal 400
   end
 end
