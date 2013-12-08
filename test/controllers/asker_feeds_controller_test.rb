@@ -41,6 +41,15 @@ describe AskerFeedsController, '#show' do
     returned_json = ActiveSupport::JSON.decode(response.body)
     returned_json['posts'].count.must_equal 1
   end
+
+  it 'pagination does not over write an posts' do
+    feed = AskerFeed.create twi_name: 'Goose', wisr_id: 123
+    11.times { feed.posts.create question: 'yolo?' }
+    response = get :show, id: feed.wisr_id
+    
+    returned_json = ActiveSupport::JSON.decode(response.body)
+    feed.reload.posts.count.must_equal 11
+  end
 end
 
 describe AskerFeedsController, '#update' do

@@ -6,13 +6,14 @@ class AskerFeedsController < ApplicationController
 
   def show
     feed = AskerFeed.where(wisr_id: params[:id]).first
+    feed_hash = feed.try :attributes
 
     if feed
       page_number = params[:page] || 1
-      feed.posts = feed.posts.page(page_number).per(10)
+      feed_hash[:posts] = feed.posts.page(page_number).per(10)
     end
 
-    render json: feed.to_json
+    render json: feed_hash.to_json
   end
 
   def update
