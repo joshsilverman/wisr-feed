@@ -2,6 +2,7 @@ source 'http://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
+gem 'unicorn'
 gem 'newrelic_rpm'
 
 gem 'mongoid', git: 'git://github.com/mongoid/mongoid.git'
