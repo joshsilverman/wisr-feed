@@ -69,12 +69,14 @@ describe AskerFeed, "#save_dependent_post" do
   it "accepts expected attrs" do
     feed = AskerFeed.create
     params = ActionController::Parameters.new({wisr_id: 123, 
+      created_at: 10.minutes.ago,
       question: 'postpost?',
       correct_answer: 'yep',
       false_answers: ['naw', 'maybe'],
       user_profile_image_urls: ['www.asdf.com', 'www.fdad.com']})
 
     attrs = params.slice(:question, 
+      :created_at,
       :correct_answer, 
       :false_answers,
       :user_profile_image_urls)

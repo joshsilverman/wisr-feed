@@ -2,7 +2,7 @@ class AskerFeed
   include Mongoid::Document
   embeds_many :posts, class_name: 'AskerFeedPost'
 
-  field :wisr_id, type: Integer
+  field :wisr_id, type: Integer # corresponds to publication
   field :twi_name, type: String
   field :twi_screen_name, type: String
   field :twi_profile_img_url, type: String
@@ -23,6 +23,7 @@ class AskerFeed
   def self.save_dependent_post feed, params
     return if params.nil?
     attrs = params.slice(:question, 
+      :created_at,
       :correct_answer,
       :false_answers,
       :user_profile_image_urls).permit!
