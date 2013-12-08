@@ -7,6 +7,11 @@ class AskerFeedsController < ApplicationController
   def show
     feed = AskerFeed.where(wisr_id: params[:id]).first
 
+    if feed
+      page_number = params[:page] || 1
+      feed.posts = feed.posts.page(page_number).per(10)
+    end
+
     render json: feed.to_json
   end
 

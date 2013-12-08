@@ -9,6 +9,8 @@ class AskerFeedPost
   field :false_answers, type: Array
   field :user_profile_image_urls, type: Array
 
+  paginates_per 10
+
   def self.create_or_update asker_feed, wisr_id, attrs
     return nil if wisr_id.nil?
     return nil if asker_feed.nil?

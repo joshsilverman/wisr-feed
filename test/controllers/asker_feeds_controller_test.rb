@@ -23,6 +23,24 @@ describe AskerFeedsController, '#show' do
     returned_json = ActiveSupport::JSON.decode(response.body)
     returned_json['posts'].first['question'].must_equal 'yolo?'
   end
+
+  it 'returns object with first 10 posts' do
+    feed = AskerFeed.create twi_name: 'Goose', wisr_id: 123
+    11.times { feed.posts.create question: 'yolo?' }
+    response = get :show, id: feed.wisr_id
+    
+    returned_json = ActiveSupport::JSON.decode(response.body)
+    returned_json['posts'].count.must_equal 10
+  end
+
+  it 'returns object with correct number of posts on page 2' do
+    feed = AskerFeed.create twi_name: 'Goose', wisr_id: 123
+    11.times { feed.posts.create question: 'yolo?' }
+    response = get :show, id: feed.wisr_id, page: 2
+    
+    returned_json = ActiveSupport::JSON.decode(response.body)
+    returned_json['posts'].count.must_equal 1
+  end
 end
 
 describe AskerFeedsController, '#update' do

@@ -1,6 +1,6 @@
 class AskerFeed
   include Mongoid::Document
-  embeds_many :posts, class_name: 'AskerFeedPost'
+  embeds_many :posts, class_name: 'AskerFeedPost', order: :created_at.desc
 
   field :wisr_id, type: Integer # corresponds to publication
   field :twi_name, type: String
