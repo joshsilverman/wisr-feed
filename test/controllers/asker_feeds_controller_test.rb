@@ -17,11 +17,11 @@ describe AskerFeedsController, '#show' do
 
   it "renders hash with asker if asker_feed exists" do
     feed = AskerFeed.create twi_name: 'Goose', wisr_id: 123
-    post = feed.posts.create text: 'yolo'
+    post = feed.posts.create question: 'yolo?'
     response = get :show, id: feed.wisr_id
     
     returned_json = ActiveSupport::JSON.decode(response.body)
-    returned_json['posts'].first['text'].must_equal 'yolo'
+    returned_json['posts'].first['question'].must_equal 'yolo?'
   end
 end
 
@@ -45,11 +45,7 @@ describe AskerFeedsController, '#update' do
     client = create :client, :with_auth_token
     params = {
       auth_token: client.authentication_token,
-      user: {
-        id: 123,
-        twi_name: 'BioBud',
-        role: 'asker'
-      }
+      asker_feed: {id: 123, twi_name: 'BioBud'}
     }
 
     post :update, params
@@ -63,10 +59,9 @@ describe AskerFeedsController, '#update' do
 
     params = {
       auth_token: token,
-      user: {
-        id: 123,
-        twi_name: 'BioBud',
-        role: 'asker'
+      asker_feed: {
+        wisr_id: 123,
+        twi_name: 'BioBud'
       }
     }
 
@@ -82,32 +77,15 @@ describe AskerFeedsController, '#update' do
 
     params = {
       auth_token: token,
-      user: {id: 123, twi_name: 'BioBud', role: 'asker'},
-      posts: [{id: 123, text: 'I am a post'},
-              {id: 124, text: 'post2'}]
+      asker_feed: {wisr_id: 123, 
+                   twi_name: 'BioBud', 
+                   post: {question: 'Whatup?', wisr_id: 777}
+                  }
     }
 
     post :update, params
 
-    posts = AskerFeed.first.posts
-    posts.count.must_equal 2
-    posts.last.text.must_equal 'post2'
-    posts.last.wisr_id.must_equal 124
-  end
-
-  it 'returns 400 if user role is not asker' do
-    client = create :client, :with_auth_token
-    params = {
-      auth_token: client.authentication_token,
-      user: {
-        id: 123,
-        twi_name: 'BioBud',
-        role: 'user'
-      }
-    }
-
-    post :update, params
-    
-    response.status.must_equal 400
+    AskerFeed.first.posts.last.question.must_equal 'Whatup?'
+    AskerFeed.first.posts.last.wisr_id.must_equal 777
   end
 end

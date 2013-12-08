@@ -40,28 +40,46 @@ describe AskerFeed, ".create_or_update" do
   end
 end
 
-describe AskerFeed, "#save_dependent_posts" do
+describe AskerFeed, "#save_dependent_post" do
   it "should accept a single post" do
     feed = AskerFeed.create
-    params = {
-      post: {id: 123, text: 'postpost'}
-    }
+    params = ActionController::Parameters.new({wisr_id: 123, 
+      question: 'postpost?'})
 
-    AskerFeed.save_dependent_posts feed, params
+    AskerFeed.save_dependent_post feed, params
 
     feed.posts.count.must_equal 1
-    feed.posts.first.text.must_equal 'postpost'
+    feed.posts.first.question.must_equal 'postpost?'
   end
 
-  it "should accept multiple posts" do
+  it "returns nil if no post passed" do
     feed = AskerFeed.create
-    params = {
-      posts: [{id: 123, text: 'I am a post'},
-              {id: 124, text: 'post2'}]
-    }
+    params = nil
 
-    AskerFeed.save_dependent_posts feed, params
+    AskerFeed.save_dependent_post(feed, params).must_equal nil
+  end
 
-    feed.posts.count.must_equal 2
+  it "returns nil if no wisr_id passed" do
+    feed = AskerFeed.create
+    params = ActionController::Parameters.new({})
+
+    AskerFeed.save_dependent_post(feed, params).must_equal nil
+  end
+
+  it "accepts expected attrs" do
+    feed = AskerFeed.create
+    params = ActionController::Parameters.new({wisr_id: 123, 
+      question: 'postpost?',
+      correct_answer: 'yep',
+      false_answers: ['naw', 'maybe'],
+      user_profile_image_urls: ['www.asdf.com', 'www.fdad.com']})
+
+    attrs = params.slice(:question, 
+      :correct_answer, 
+      :false_answers,
+      :user_profile_image_urls)
+    AskerFeedPost.expects(:create_or_update).with(feed, 123, attrs)
+
+    AskerFeed.save_dependent_post feed, params
   end
 end

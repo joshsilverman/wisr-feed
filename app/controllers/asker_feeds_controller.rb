@@ -13,13 +13,13 @@ class AskerFeedsController < ApplicationController
   def update
     wisr_id, attrs = nil
 
-    if params[:user] and params[:user]['role'] == 'asker'
-      
-      attrs = params[:user].permit(:twi_name)
-      wisr_id = params[:user][:id] 
-      feed = AskerFeed.create_or_update wisr_id, attrs
+    if params[:asker_feed]
 
-      AskerFeed.save_dependent_posts feed, params
+      attrs = params[:asker_feed].permit(:twi_name)
+      wisr_id = params[:asker_feed][:wisr_id]
+      feed = AskerFeed.create_or_update wisr_id, attrs
+      
+      AskerFeed.save_dependent_post feed, params[:asker_feed][:post]
 
       render nothing: true
     else

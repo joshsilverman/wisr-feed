@@ -20,17 +20,12 @@ class AskerFeed
     feed
   end
 
-  def self.save_dependent_posts feed, params
-    posts_params = params[:posts]
-    posts_params ||= [params[:post]]
-
-    return if posts_params.nil?
-
-    posts_params.each do |post_params|
-      post_params = ActionController::Parameters.new post_params
-      attrs = post_params.permit(:text)
-
-      AskerFeedPost.create_or_update feed, post_params[:id], attrs
-    end
+  def self.save_dependent_post feed, params
+    return if params.nil?
+    attrs = params.slice(:question, 
+      :correct_answer,
+      :false_answers,
+      :user_profile_image_urls).permit!
+    AskerFeedPost.create_or_update feed, params[:wisr_id], attrs
   end
 end
