@@ -110,6 +110,7 @@ GEM
       bson (~> 2.0.0.rc3)
       optionable (~> 0.1.1)
     multi_json (1.8.2)
+    newrelic_rpm (3.6.6.147)
     optionable (0.1.1)
     origin (1.1.0)
     orm_adapter (0.4.0)
@@ -198,6 +199,7 @@ DEPENDENCIES
   minitest (~> 4.7)
   mocha
   mongoid!
+  newrelic_rpm
   pry
   pry-nav
   rails (= 4.0.0)
